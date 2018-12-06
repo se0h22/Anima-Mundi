@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="testList">
+  <select id="list" resultType="testListVo">
+    select * from test_list
+  </select>
+  <insert id="insert">
+    insert into test_list values{#{testTable_name},#{test_name},#{point}}
+  </insert>
+  <update id="update">
+    update test_list set test_name=#{test_name},point=#{point} where testTable_name=#{testTable_name}
+  </update>
+  <delete id="delete">
+    delete test_list where testTable_name=#{testTable_name}
+  </delete>
+  <select id="customList" resultType="testListVo">
+  	select testTable_name, test_name, point from custom_list order by adddate desc
+  </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+  <select id="boardList" resultType="QABoardVo">
+    select * from QAboard where id=#{id} order by bno desc
+  </select>
+  <select id="getBoard" resultType="QABoardVo">
+    select * from QAboard where bno=#{bno}
+  </select>
+  
+  <insert id="insert" parameterType="QABoardVo">
+   insert into QAboard values(#{bno},#{category},#{id},#{title},#{content},#{filename},sysdate,#{state})
+  </insert> 
+  <update id="update" parameterType="QABoardVo">
+   update QAboard set category=#{category},id=#{id},title=#{title},content=#{content},filename=#{filename},state=#{state} where bno=#{bno}
+  </update> 
+  <delete id="delete" parameterType="QABoardVo">
+   delete QAboard where bno=#{bno} 
+  </delete>
+   <select id="nextNo" resultType="java.lang.Integer">
+    select nvl(max(bno),0)+1 from QABoard
+  </select>
+</mapper>

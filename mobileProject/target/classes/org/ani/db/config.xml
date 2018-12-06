@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration> 
+  <typeAliases>
+  	<typeAlias type="org.ani.vo.UserMainVo" alias="userVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.ItemListVo" alias="itemVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.UserItemVo" alias="custVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.TestListVo" alias="testListVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.TestR_listVo" alias="testR_listVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.QABoardVo" alias="QABoardVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.UserCustomVo" alias="ucVo"></typeAlias>
+  	<typeAlias type="org.ani.vo.Chat_listVo" alias="Chat_listVo"></typeAlias>
+  </typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@:1521:XE"/>
+        <property name="username" value="madang"/>
+        <property name="password" value="madang"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="org/ani/mapper/itemListMapper.xml"/>
+    <mapper resource="org/ani/mapper/adminMapper.xml"/>
+    <mapper resource="org/ani/mapper/qaBoardMapper.xml"/>
+    <mapper resource="org/ani/mapper/testListMapper.xml"/>
+    <mapper resource="org/ani/mapper/testRlistMapper.xml"/>
+    <mapper resource="org/ani/mapper/userMainMapper.xml"/>
+    <mapper resource="org/ani/mapper/frontMapper.xml"/>
+    <mapper resource="org/ani/mapper/chatListMapper.xml"/>
+  </mappers>
+</configuration>

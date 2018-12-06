@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="item">
+<!-- itemVo : ItemListVo
+	 custVo : UserItemVo -->
+  <select id="list" resultType="itemVo">
+    select * from item_list
+  </select>
+  <select id="detail" resultType="itemVo">
+  	select * from item_list where item_key=#{item_key}
+  </select>
+  <insert id="insertItem" parameterType="itemVo">
+  	insert into item_list values(#{item_key},#{point},#{item_image},#{item_name},#{info},#{chat_startDate},#{chat_endDate})
+  </insert>
+  <update id="updateItem" parameterType="itemVo">
+  	update item_list set point=#{point}, item_image=#{item_image}, item_name=#{item_name}, info=#{info}, chat_startDate=#{chat_startDate}, chat_endDate=#{chat_endDate} where item_key=#{item_key}
+  </update>
+  <delete id="delete">
+  	delete item_list where item_key=#{item_key}
+  </delete>
+  <select id="haveList" resultType="custVo"><!-- 갖고잇는 아이템리스트 -->
+  	select u.no as no, u.item_key as item_key, id, buy_date, now, item_image, item_name, chatDate, letter, point, info, lcount
+  	from item_list e, user_custom u where u.item_key=e.item_key and u.id=#{id} order by buy_date desc
+  </select>
+  <select id="haveChat" resultType="custVo"><!-- 갖고있는 이용권 -->
+  	select * from item_list i, user_custom u 
+  	where i.item_key=u.item_key and u.id=#{id} and i.item_key like ‘E%’
+  </select>
+  <insert id="buy"><!-- 상품구매한 순간 이기vo안만들고 걍 맵으로 보낼거임 -->
+  	insert into user_custom values(seq_uc.nextval,#{item_key},#{id},sysdate,#{now},#{lcount})
+  </insert>
+  <update id="buyPoint">
+  	update user_main set point=point-#{point} where id=#{id}
+  </update>
+  <update id="setItem">
+  	update user_custom set now=#{now} where id=#{id} and item_key=#{item_key}
+  </update>
+  <update id="setItem2" parameterType="java.lang.String">
+  	update user_custom set now='false' where id=#{id} and item_key like #{startK} || '%'
+  </update>
+  <delete id="useItem"><!-- 아이템 제거 -->
+  	delete user_custom where no=#{no} and id=#{id}
+  </delete>
+  <select id="getP" resultType="java.lang.String">
+  	select item_image from item_list where item_key in (select item_key from user_custom where now='true' and id=#{id} and item_key like 'P%')
+  </select>	
+</mapper>

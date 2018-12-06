@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatList">
+ <select id="list" resultType="Chat_listVo">
+ 	select * from chat_list where receiver=#{receiver} order by chatdate desc
+ </select>
+  <select id="fromMe" resultType="Chat_listVo">
+ 	select * from chat_list where id=#{id} order by chatdate desc
+ </select>
+ <select id="getChat" resultType="Chat_listVo">
+ 	select * from chat_list where no=#{no}
+ </select>
+ <insert id="insert">
+   insert into chat_list values(seq_chat.nextval,#{id},#{contents},sysdate,#{receiver})  
+ </insert> 
+ <delete id="delete">
+   delete chat_list where no=#{no} 
+  </delete>  
+  <!-- 쪽지권 사용 -->
+ <update id="useChat">
+  update user_custom set lcount=lcount-1 where no in (select no from (select no,id,lcount,buy_date from user_custom order by buy_date) where rownum=1 and id=#{id} and lcount!=0)  
+ </update> 
+ 
+   <select id="haveL" resultType="ucVo"><!-- 갖고있는 쪽지권 횟수 -->
+  	select sum(lcount) as count from user_custom where id=#{id}
+  </select>
+</mapper>

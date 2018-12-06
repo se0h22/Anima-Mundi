@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+  	<select id="Ad_list" resultType="userVo">
+  		select * from user_main
+  	</select>
+  	<delete id="userRemove">
+  		delete from user_main id=#{id}
+  	</delete>
+  	<!--  <select id="item_picList">
+  	</select>
+  	<insert id="item_picAdd">
+  	</insert>
+  	<select id="Ad_tList">
+  	select * from test_list
+  	</select>
+  	-->
+  	<select id="qa_list" resultType="QABoardVo">
+  		select * from qaboard order by bno desc
+  	</select>
+</mapper>

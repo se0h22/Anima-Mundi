@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+  	<select id="pimg" resultType="java.lang.String">
+  	select item_image from user_custom u, item_list i where u.item_key = i.item_key and u.id=#{id} and u.now='true'
+  	</select>
+  	<select id="getTimes" resultType="itemVo">
+  	select item_key,chatdate,letter from item_list where item_key in (select item_key from user_custom where id=#{id} and item_key like 'E%')
+  	</select>
+  	<select id="myCount" resultType="ucVo">
+  	select item_key,count(*) as count from user_custom where id=#{id} and item_key like 'E%' group by item_key
+  	</select>
+  	<insert id="addCustomTest" parameterType="testListVo">
+  		insert into custom_list values(#{testTable_name},#{test_name},#{point},sysdate)
+  	</insert>
+</mapper>
